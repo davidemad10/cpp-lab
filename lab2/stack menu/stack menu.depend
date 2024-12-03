@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1733259914 source:d:\iti\1) osad45\2) c++\lab2\stack menu\main.cpp
+	<iostream>
+	<limits>
+	<cctype>
+	<thread>
+	<chrono>
+	<conio.h>
+	<windows.h>
+	<cstring>
+
