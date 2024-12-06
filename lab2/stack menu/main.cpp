@@ -35,6 +35,17 @@ public:
         top = -1;
         arr = new int[size];
     }
+     // Copy constructor
+    Stack(const Stack &other) {
+        size = other.size;
+        top = other.top;
+        arr = new int[size];
+        for (int i = 0; i <= top; i++) {
+            arr[i] = other.arr[i];
+        }
+        objectCount++;
+        cout << "Copy Constructor Called. Total Objects: " << objectCount << endl;
+    }
 
     void push(int x) {
         if (top == size - 1) {
@@ -71,12 +82,36 @@ public:
         }
     }
 
+     // Static function to return active object count
+    static int getObjectCount() {
+        return objectCount;
+    }
+
     ~Stack() {
         delete[] arr;
         std::cout << "Deleted Successfully" << std::endl;
     }
 };
+// Initialize static member
+int Stack::objectCount = 0;
 
+// 1. viewContent (Pass by Reference)
+void viewContentByReference(Stack &stack) {
+    cout << "\n[viewContentByReference] Function Called\n";
+    stack.printStack();
+}
+
+// 2. viewContent (Pass by Value and Without Copy Constructor)
+void viewContentByValueWithoutCopy(Stack stack) {
+    cout << "\n[viewContentByValueWithoutCopy] Function Called\n";
+    stack.printStack();
+}
+
+// 3. viewContent (Pass by Value and With Copy Constructor)
+void viewContentByValueWithCopy(Stack stack) {
+    cout << "\n[viewContentByValueWithCopy] Function Called\n";
+    stack.printStack();
+}
 
 
 
@@ -115,28 +150,28 @@ int main() {
             SetColor(r);
         else
             SetColor(w);
-        std::cout << "Push\n";
+        cout << "Push\n";
 
         gotoxy(2, 8);
         if (position == 1)
             SetColor(r);
         else
             SetColor(w);
-        std::cout << "Display\n";
+        cout << "Display\n";
 
         gotoxy(2, 12);
         if (position == 2)
             SetColor(r);
         else
             SetColor(w);
-        std::cout << "Pop\n";
+        cout << "Pop\n";
 
         gotoxy(2, 16);
         if (position == 3)
             SetColor(r);
         else
             SetColor(w);
-        std::cout << "Exit\n";
+        cout << "Exit\n";
 
         char op = getch();
         if (op == -32) {
@@ -165,7 +200,7 @@ int main() {
                     system("cls");
                     gotoxy(2, 2);
                     SetColor(w);
-                    std::cout << "Display\n";
+                    cout << "Display\n";
                     printEmployeeArray(Employees);
                     getch();
                     break;
@@ -174,7 +209,7 @@ int main() {
                     system("cls");
                     gotoxy(2, 2);
                     SetColor(w);
-                    std::cout << "Pop from stack:\n";
+                    cout << "Pop from stack:\n";
                     stack->pop(Employees, c);
                     getch();
                     break;
@@ -183,7 +218,7 @@ int main() {
                     system("cls");
                     gotoxy(2, 4);
                     SetColor(w);
-                    std::cout << "Goodbye\n";
+                    cout << "Goodbye\n";
                     delete stack;
                     return 0;
                 }
@@ -223,10 +258,10 @@ void scanEmployeeArray(Employee s[], int stackSize, Stack* stack) {
 
             if (cin.fail() || s[c].id <= 0) {
                 cin.clear(); // Clear error flags
-                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore invalid input
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "Invalid input. Please enter a positive integer.\n";
             } else {
-                break; // Valid input
+                break;
             }
         }
         cin.ignore();
@@ -235,7 +270,7 @@ void scanEmployeeArray(Employee s[], int stackSize, Stack* stack) {
             cout << "Enter name [" << (c + 1) << "]\n----------------\n";
             getline(cin, s[c].name);
 
-            validName = true; // Assume valid until proven otherwise
+            validName = true;
             for (int j = 0; s[c].name[j] != '\0'; ++j) {
                 if (!isalpha(s[c].name[j]) && s[c].name[j] != ' ') { // Check for alphabetic or space
                     validName = false;
