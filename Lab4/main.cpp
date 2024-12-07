@@ -33,8 +33,8 @@ public:
 
 class Rect {
 private:
-    Point ul;
-    Point lr;
+    Point ul; //upper left
+    Point lr; // lower left
 public:
     Rect() : ul(), lr() {}
     Rect(int x1, int y1, int x2, int y2) : ul(x1, y1), lr(x2, y2) {}
@@ -61,7 +61,7 @@ public:
 
 class Picture {
 private:
-    int cNum, rNum, lNum;
+    int cNum, rNum, lNum; // Number of circles, rectangles, and lines, respectively.
     Circle* pCircles;
     Rect* pRects;
     Line* pLines;
